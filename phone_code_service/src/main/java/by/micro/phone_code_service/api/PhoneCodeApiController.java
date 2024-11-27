@@ -17,9 +17,10 @@ public class PhoneCodeApiController {
         return ResponseEntity.ok(phoneCodeService.getCode(phoneCodeId));
     }
 
-//    @PostMapping
-//    public ResponseEntity<Void> saveContacts(@RequestBody ContactDto contactDto) {
-//        phoneCodeService.saveContact(contactDto);
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
+    @PostMapping("/save")
+    public ResponseEntity<Integer> saveCode(@RequestParam String code,
+                                             @RequestParam Integer countryId ) {
+        Integer id = phoneCodeService.saveCode(code, countryId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(id);
+    }
 }

@@ -18,9 +18,12 @@ public class ContactApiController {
         return ResponseEntity.ok(contactsService.getContacts(phoneCodeId));
     }
 
-//    @PostMapping
-//    public ResponseEntity<Void> saveContacts(@RequestBody ContactDto contactDto) {
-//        contactsService.saveContact(contactDto);
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
+    @PostMapping
+    public ResponseEntity<Void> saveContacts(@RequestParam Integer cvId,
+                                             @RequestParam String phoneNumber,
+                                             @RequestParam String code,
+                                             @RequestParam Integer countryId) {
+        contactsService.saveContact(cvId, phoneNumber, code, countryId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 }
