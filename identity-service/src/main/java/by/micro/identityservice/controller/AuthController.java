@@ -1,11 +1,14 @@
 package by.micro.identityservice.controller;
 
+import by.micro.identityservice.dto.AuthRequest;
 import by.micro.identityservice.dto.UserCredential;
 import by.micro.identityservice.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,10 +26,13 @@ public class AuthController {
     }
     // Создание токена
     @PostMapping("/token")
-    public ResponseEntity<String> generateToken(@RequestBody AuthRequest authRequest) {
-        authenticationManager.authenticate()
-        String token = authService.generateToken(authRequest);
-        return ResponseEntity.ok(token);
+    public String generateToken(@RequestBody AuthRequest authRequest) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+       if(authentication.isAuthenticated()) {
+           return authService.generateToken(authRequest.getUsername());
+       } else {
+           throw new RuntimeException("invalid access");
+       }
     }
 
     // Валидация токена
