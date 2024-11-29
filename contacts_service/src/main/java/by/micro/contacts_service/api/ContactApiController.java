@@ -8,17 +8,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/contact")
+@RequestMapping("/api/contact/")
 @RequiredArgsConstructor
 public class ContactApiController {
     private final ContactsService contactsService;
 
-    @GetMapping("/{phoneCodeId}")
+    @GetMapping("{phoneCodeId}")
     public ResponseEntity<ContactDto> getContacts(@PathVariable Integer phoneCodeId) {
         return ResponseEntity.ok(contactsService.getContacts(phoneCodeId));
     }
 
-    @PostMapping
+    @PostMapping("save")
     public ResponseEntity<Void> saveContacts(@RequestParam Integer cvId,
                                              @RequestParam String phoneNumber,
                                              @RequestParam String code,
