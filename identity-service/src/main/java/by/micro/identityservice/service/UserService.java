@@ -1,11 +1,10 @@
 package by.micro.identityservice.service;
 
-import by.micro.identityservice.repository.UserRepository;
+import by.micro.identityservice.repository.UserCredentialRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -19,7 +18,7 @@ import java.util.Collections;
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final UserCredentialRepository userCredentialRepository;
 //    private final PasswordEncoder passwordEncoder;
 //
 //    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -39,12 +38,12 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
-                .map(user -> new org.springframework.security.core.userdetails.User(
+        return userCredentialRepository.findByUsername(username)
+                                       .map(user -> new org.springframework.security.core.userdetails.User(
                         user.getUsername(),
                         user.getPassword(),
                         Collections.singleton(user.getRole())
                 ))
-                 .orElseThrow(() -> new UsernameNotFoundException("Invalid token: " + username));
+                                       .orElseThrow(() -> new UsernameNotFoundException("Invalid token: " + username));
     }
 }
