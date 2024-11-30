@@ -2,6 +2,7 @@ package by.micro.identityservice.dto;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users", schema = "public")
+@Builder
 public class UserCredential {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +24,6 @@ public class UserCredential {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @Column()
+    private String email;
 }
