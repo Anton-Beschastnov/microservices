@@ -28,13 +28,14 @@ public class AuthService {
 
     @Value("${jwt.secret}")
     private String secretKey;
+
     // Создание пользователя
     public String saveUser(UserCredentialDto credentialDto) {
-        UserCredential  credential = UserCredential.builder()
-                      .username(credentialDto.getUsername())
-                      .password(passwordEncoder.encode(credentialDto.getPassword()))
-                      .email(credentialDto.getEmail())
-                      .role(credentialDto.getRole()).build();
+        UserCredential credential = UserCredential.builder()
+                                                  .username(credentialDto.getUsername())
+                                                  .password(passwordEncoder.encode(credentialDto.getPassword()))
+                                                  .email(credentialDto.getEmail())
+                                                  .role(credentialDto.getRole()).build();
         repository.save(credential);
         return "user added to the system";
     }
@@ -55,7 +56,7 @@ public class AuthService {
 
     public String validateToken(String token) {
         try {
-            return Jwts.parserBuilder()
+            return Jwts.parser()
                        .setSigningKey(getSignKey())
                        .build()
                        .parseClaimsJws(token)
@@ -69,7 +70,9 @@ public class AuthService {
             throw new IllegalArgumentException("Invalid JWT token");
         }
     }
-    private Key getSignKey(){
+
+
+    private Key getSignKey() {
         byte[] keyBytes = Base64.getDecoder().decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
