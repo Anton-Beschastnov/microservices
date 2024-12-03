@@ -17,7 +17,7 @@ public interface ContactsServiceFeignClient {
     default ResponseEntity<String> getCodeInfoFallback( Integer phoneCodeId, Throwable exception){
         System.out.println("phoneCodeId: " + phoneCodeId);
         System.out.println("exception: " + exception.getMessage());
-        return ResponseEntity.ok("+7");
+        return ResponseEntity.ok("+12345");
     }
 
     @PostMapping("/api/phone/code/save")
