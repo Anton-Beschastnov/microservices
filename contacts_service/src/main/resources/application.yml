@@ -1,0 +1,61 @@
+resilience4j:
+  circuitbreaker:
+    instances:
+      phone_code_service:
+        failureRateThreshold: 50 # Порог неудачных попыток, после которого происходит открытие цепи, в процентах от slidingWindowSize
+        automaticTransitionFromOpenToHalfOpenEnabled: true # Разрешаем автоматически переходить в полуоткрытый режим (Fallback метод работает) по истечении waitDurationInOpenState
+        waitDurationInOpenState: 10s
+        slidingWindowType: COUNT_BASED # Окно анализа, когда Circuit Breaker переходить в Open State
+        slidingWindowSize: 2 # Анализируй окно из 2 запросов и если 50% из них ошибочны, переходи в Open State
+        minimumNumberOfCalls: 1 # Минимальное количество запросов, при котором Circuit Breaker разрешается переходить в Open
+        eventConsumerBufferSize: 10 # Настройка для актуатора, сохраняй 10 ивентов в память
+        registerHealthIndicator: true # Настройка для актуатора, регистрируй ивенты
+        permittedNumberOfCallsInHalfOpenState: 3 # Максимум запросов в Half-Open
+    circuit-breaker-aspect-order: 1
+  retry:
+    retry-aspect-order: 20
+    instances:
+      phone_code_service:
+        maxAttempts: 5
+        waitDuration: 5000
+#        retryExceptions:
+#          - java.lang.Exception
+#        ignoreExceptions: [ ]
+#В состоянии Closed:
+#  Circuit Breaker отслеживает последние slidingWindowSize вызовов.
+#  Если хотя бы 50% из них завершились ошибкой, он переходит в состояние Open, параметр failureRateThreshold - %.
+#  slidingWindowType, slidingWindowSize можно указать время и тогда параметр failureRateThreshold будет указывать на % запросов, которые легли за это время
+#В состоянии Open:
+#  Circuit Breaker блокирует все вызовы на waitDurationInOpenState секунд.
+#  automaticTransitionFromOpenToHalfOpenEnabled: true -  разрешаем автоматически переходить в полуоткрытый(Half-Open)
+#    режим(в это время работает Fallback метод) по истечении waitDurationInOpenState
+#После истечения waitDurationInOpenState секунд:
+#  Circuit Breaker переходит в состояние Half-Open и пропускает до permittedNumberOfCallsInHalfOpenState вызовов:
+#  Если все permittedNumberOfCallsInHalfOpenState вызовов успешны — переключается обратно в Closed.
+#  Если хотя бы один вызов завершился сбоем — возвращается в Open.
+#
+#  Circuit Breaker не будет сразу реагировать на отказы,
+#  пока общее количество вызовов не достигнет значения, указанного в minimumNumberOfCalls.
+#  Это помогает избежать ложных срабатываний,
+#  особенно если вызовов мало и даже одна ошибка может существенно повлиять на процент отказов.
+
+# circuit-breaker-aspect-order: 1
+#  Эта настройка задаёт порядок выполнения аспекта (или обработчика) для CircuitBreaker(первый по умолчанию) в цепочке аспектов,
+# если в проекте используется несколько аспектов для различных механизмов отказоустойчивости.
+#  В данном случае, аспект Circuit Breaker будет выполняться вторым, потому что ему присваивается приоритет 1.
+# retry:
+#  Этот блок конфигурации относится к Retry.
+#  Retry позволяет автоматизировать повторные попытки выполнения запроса в случае ошибки или неудачи
+#  (например, если внешняя система временно недоступна).
+# retry-aspect-order: 2
+#  Эта настройка задаёт порядок для аспекта Retry.
+#  В данном случае, аспект Retry будет выполнен до Circuit Breaker, так как ему присваивается приоритет 2.
+# instances:
+#  Эта настройка указывает конфигурацию для конкретных сервисов.
+#  В примере указан сервис phone_code_service, для которого задаются настройки повторных попыток.
+# maxAttempts: 4
+#  Это максимальное количество попыток, которое будет сделано для выполнения запроса.
+#  Если запрос не удастся выполнить успешно с первого раза, Retry будет пытаться выполнить его ещё  раз (в сумме 4 попытки).
+# waitDuration: 5000
+#  Это время ожидания между каждой попыткой (в миллисекундах).
+#  В данном случае, после неудачного запроса, система будет ожидать 5000 миллисекунд (5 секунд) перед тем, как сделать повторную попытку.

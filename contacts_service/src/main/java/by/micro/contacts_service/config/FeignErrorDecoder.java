@@ -13,14 +13,17 @@ public class FeignErrorDecoder implements ErrorDecoder {
     @Override
     public Exception decode(String methodKey, Response response) {
         switch (response.status()) {
+            case 500:
+                LOGGER.debug("PhoneCodeService is not available");
             case 400:
                 //TODO
+                LOGGER.debug("PhoneCodeService is not available");
                 break;
             case 404:
                 if (methodKey.contains("getCodeInfo")) {
                     return new ResponseStatusException(HttpStatusCode.valueOf(404), "PhoneCodeService is not available");
                 }
-                LOGGER.error("PhoneCodeService is not available");
+                LOGGER.debug("PhoneCodeService is not available");
                 break;
             default:
                 return new RuntimeException(response.reason());
