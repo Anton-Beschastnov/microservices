@@ -13,11 +13,11 @@ spring:
             client-id: SpringSecurity
             client-secret: 2rjV4AuK2LLzgX3i8pQQntdFFnAE4trB
             scope: openid
-            authorization-grant-type: password
-            token-uri:  http://localhost:8080/realms/microservices/protocol/openid-connect/token
-            provider:
-              keycloak:
-                issuer-uri: http://localhost:8080/realms/microservices
+            authorization-grant-type: client_credentials
+            token-uri: http://localhost:8080/realms/microservices/protocol/openid-connect/token
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/microservices/protocol/openid-connect/certs
 
   cloud:
     gateway:
