@@ -1,0 +1,40 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: GATEWAY_SERVICE
+
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: SpringSecurity
+            client-secret: 2rjV4AuK2LLzgX3i8pQQntdFFnAE4trB
+            scope: openid
+            authorization-grant-type: password
+            token-uri:  http://localhost:8080/realms/microservices/protocol/openid-connect/token
+            provider:
+              keycloak:
+                issuer-uri: http://localhost:8080/realms/microservices
+
+  cloud:
+    gateway:
+      routes:
+        - id: contacts-service
+          uri: lb://CONTACTS-SERVICE
+          predicates:
+            - Path=/api/contact/**
+
+        - id: phone-code-service
+          uri: lb://PHONE-CODE-SERVICE
+          predicates:
+            - Path=/api/phone/code/**
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka
