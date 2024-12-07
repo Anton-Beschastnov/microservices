@@ -11,7 +11,9 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtAuthenticationConverter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import reactor.core.publisher.Flux;
-
+/**
+ * все проверяем на gateway, в микросервисах только роли проверяем
+ */
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
