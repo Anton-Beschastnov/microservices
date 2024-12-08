@@ -1,5 +1,5 @@
 server:
-  port: 8088
+  port: 8080
 
 spring:
   application:
@@ -11,13 +11,13 @@ spring:
         registration:
           keycloak:
             client-id: SpringSecurity
-            client-secret: 2rjV4AuK2LLzgX3i8pQQntdFFnAE4trB
+            client-secret: 79mbzYyyjDQ7oL6120omMjY76SUQQjj6
             scope: openid
             authorization-grant-type: client_credentials
-            token-uri: http://localhost:8080/realms/microservices/protocol/openid-connect/token
+            token-uri: http://localhost:8888/realms/microservices/protocol/openid-connect/token
         provider:
           keycloak:
-            issuer-uri: http://localhost:8080/realms/microservices/protocol/openid-connect/certs
+            issuer-uri: http://localhost:8888/realms/microservices/protocol/openid-connect/certs
 
   cloud:
     gateway:
