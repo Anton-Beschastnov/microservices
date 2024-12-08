@@ -35,8 +35,12 @@ public class SecurityConfig {
                                    userInfoEndpoint.userAuthoritiesMapper(userAuthoritiesMapper())
                            )
                    )
-                   .logout(logout ->
-                           logout.logoutSuccessHandler(oidcLogoutSuccessHandler)).build();
+                   .logout(logout -> logout
+                           .logoutSuccessHandler(oidcLogoutSuccessHandler(clientRegistrationRepository))
+                           .invalidateHttpSession(true)
+                           .clearAuthentication(true)
+                           .deleteCookies("JSESSIONID")
+                   ).build();
     }
 
     @Bean
