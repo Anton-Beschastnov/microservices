@@ -10,15 +10,48 @@ spring:
       client:
         registration:
           keycloak:
-            client-id: SpringSecurity
+            client-id: mvc_oauth2_client_service
             client-secret: 79mbzYyyjDQ7oL6120omMjY76SUQQjj6
+            scope: openid, profile
             authorization-grant-type: authorization_code
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-            scope: openid, profile, email
+            redirect-uri: "http://localhost:8765/login/oauth2/code/keycloak"  # Указываем правильный redirect-uri
         provider:
           keycloak:
-            authorization-uri: http://localhost:8888/realms/mvc_oauth2_client_service/protocol/openid-connect/auth
-            token-uri: http://localhost:8888/realms/mvc_oauth2_client_service/protocol/openid-connect/token
-            user-info-uri: http://localhost:8888/realms/mvc_oauth2_client_service/protocol/openid-connect/userinfo
-            jwk-set-uri: http://localhost:8888/realms/mvc_oauth2_client_service/protocol/openid-connect/certs
+            authorization-uri: http://localhost:8888/realms/Master/protocol/openid-connect/auth
+            token-uri: http://localhost:8888/realms/Master/protocol/openid-connect/token
+            user-info-uri: http://localhost:8888/realms/Master/protocol/openid-connect/userinfo
+            jwk-set-uri: http://localhost:8888/realms/Master/protocol/openid-connect/certs
+            issuer-uri: http://localhost:8888/realms/Master
             user-name-attribute: preferred_username
+
+keycloak:
+  server-url: http://localhost:8888/auth
+  realm: Master
+  username: admin
+  password: adminpass
+
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          keycloak:
+#            client-id: mvc_oauth2_client_service
+#            client-secret: 79mbzYyyjDQ7oL6120omMjY76SUQQjj6
+#            authorization-grant-type: authorization_code
+#            redirect-uri: http://localhost:8765/login/oauth2/code/keycloak
+#            scope: openid, profile, email
+#        provider:
+#          keycloak:
+#            authorization-uri: http://localhost:8888/realms/mvc_oauth2_client_service/protocol/openid-connect/auth
+#            token-uri: http://localhost:8888/realms/mvc_oauth2_client_service/protocol/openid-connect/token
+#            user-info-uri: http://localhost:8888/realms/mvc_oauth2_client_service/protocol/openid-connect/userinfo
+#            jwk-set-uri: http://localhost:8888/realms/mvc_oauth2_client_service/protocol/openid-connect/certs
+#            user-name-attribute: preferred_username
+
+#keycloak:
+#  server-url: http://localhost:8888/auth
+#  realm: Master
+#  username: admin
+#  password: adminpass
+
+

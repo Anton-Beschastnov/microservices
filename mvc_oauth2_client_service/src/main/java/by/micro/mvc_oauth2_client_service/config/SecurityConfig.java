@@ -103,7 +103,8 @@ public class SecurityConfig {
         return (authorities) -> {
             Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
             authorities.forEach(authority -> {
-                if (authority instanceof OidcUserAuthority oidcUserAuthority) {
+                if (authority instanceof OidcUserAuthority ) {
+                    OidcUserAuthority oidcUserAuthority = (OidcUserAuthority) authority;
                     OidcUserInfo userInfo = oidcUserAuthority.getUserInfo();
                     Map<String, Object> realmAccess = userInfo.getClaim("realm_access");
                     Collection<String> realmRoles;

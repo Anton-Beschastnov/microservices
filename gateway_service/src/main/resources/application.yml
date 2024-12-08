@@ -10,7 +10,7 @@ spring:
       client:
         registration:
           keycloak:
-            client-id: SpringSecurity
+            client-id: mvc_oauth2_client_service
             client-secret: 79mbzYyyjDQ7oL6120omMjY76SUQQjj6
             scope: openid
             authorization-grant-type: client_credentials
