@@ -30,6 +30,13 @@ keycloak:
   username: admin
   password: adminpass
 
+
+
+
+
+
+
+
 #  security:
 #    oauth2:
 #      client:
