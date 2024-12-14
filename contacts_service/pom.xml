@@ -128,7 +128,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.maven.plugin.version}</version>
                 <configuration>
-                    <mainClass>by.micro.identityservice.IdentityServiceApplication</mainClass>
+                    <mainClass>by.micro.contacts_service.ContactsServiceApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

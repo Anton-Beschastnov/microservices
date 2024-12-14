@@ -2,20 +2,25 @@
    port: 9999 # Порт, на котором будет работать Config Server
 
  spring:
-   application:
-     name: CONFIG-SERVER # Название приложения
    cloud:
      config:
        server:
          git:
-           uri: git@github.com:Anton-Beschastnov/AppConfigurationServer.git # URL репозитория с конфигурацией, SSH
+           uri: https://github.com/Anton-Beschastnov/AppConfigurationServer.git
+           username: ${GITHUB_USERNAME}
+           password: ${GITHUB_TOKEN}
+           default-label: dev # Укажите нужную ветку, если необходимо
+           refresh-rate: 0  # Отключает кэширование
 
+
+
+# git@github.com:Anton-Beschastnov/AppConfigurationServer.git # URL репозитория с конфигурацией, SSH
 #   git@github.com — это стандартный SSH-хост для подключения к GitHub.
 #   Он используется для работы с репозиториями через SSH.
 # username — это владелец репозитория:
 #   Если репозиторий находится в вашем аккаунте GitHub, то здесь указывается ваш логин.
 #   Если репозиторий принадлежит организации, указывается имя организации.
-#   config-repo — имя репозитория, в котором хранятся файлы конфигурации.
+#   config-repo — имя репозитория, в котором хранятся файлы конфигурации. https://github.com/Anton-Beschastnov/AppConfigurationServer
 
 
 

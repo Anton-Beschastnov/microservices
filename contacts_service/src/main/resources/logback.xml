@@ -8,7 +8,7 @@
 
     <!-- Логгирование в файл -->
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>logs/ContactsServiceApplication.log</file>
+        <file>contacts_service/logs/ContactsServiceApplication.log</file>
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
